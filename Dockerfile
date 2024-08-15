@@ -1,6 +1,6 @@
-FROM centos
+FROM python:3.10-alpine
 
 WORKDIR /app
-COPY . /app
+COPY main.py /app
 
-CMD ls /app
+CMD python main.py
