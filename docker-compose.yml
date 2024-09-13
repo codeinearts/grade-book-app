@@ -1,0 +1,27 @@
+version: "3.9"
+services:
+  postgres-database:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=lagranzanahoriavendra
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - grade-book-network
+
+  flask-image:
+    build: .
+    ports:
+      - "5000:5000"
+    depends_on:
+      - postgres-database
+    networks:
+      - grade-book-network
+
+volumes:
+  postgres-data:
+
+networks:
+  grade-book-network:
