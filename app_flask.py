@@ -5,8 +5,7 @@ from psycopg2 import connect, OperationalError
 def get_db_connection():
     try:
         conn = connect(
-            # host="172.17.0.2",
-            host="localhost",
+            host="postgres-database",  # Nombre del servicio Docker
             port=5432,
             user="postgres",
             database="postgres",
@@ -15,7 +14,7 @@ def get_db_connection():
         return conn
     except OperationalError as error:
         print(f"Error connecting to the database: {error}")
-        return None
+        return f"Error connecting to the database: {error}"
 
 app = Flask(__name__)
 

@@ -42,7 +42,7 @@
 
 ## Docker commands
 
-Build docker image -> `docker build . -t grade-book-app-image`
+Build docker image -> `docker build -t grade-book-app-image .`
 
 Run docker image in a container -> `docker run --rm --name grade-book-app-container grade-book-app-image`
 
