@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request, redirect, url_for
 from psycopg2 import connect, OperationalError
 
 # Crear la conexión
@@ -14,7 +14,7 @@ def get_db_connection():
         return conn
     except OperationalError as error:
         print(f"Error connecting to the database: {error}")
-        return f"Error connecting to the database: {error}"
+        return None
 
 app = Flask(__name__)
 
@@ -60,7 +60,8 @@ def hello_geek():
         <h1>Bienvenido a la App de Gestión de Estudiantes</h1>
         <p>Esta es la página principal de nuestra aplicación donde puedes gestionar y visualizar datos de los estudiantes.</p>
         <p>Haz clic en el enlace de abajo para ver la lista de correos electrónicos de los estudiantes registrados.</p>
-        <a href="/list-email-students">Ver lista de correos electrónicos</a>
+        <a href="/list-email-students">Ver lista de correos electrónicos</a><br><br>
+        <a href="/add-student">Añadir nuevo estudiante</a>
     </body>
     </html>
     """
@@ -88,7 +89,7 @@ def read_email():
 
         records = cursor.fetchall()
         for row in records:
-            email_list.append(row[email_col_idx])  # Asumiendo que el email está en la segunda columna
+            email_list.append(row[email_col_idx])
 
         # Crear la lista HTML
         email_items = ''.join(f"<li>{email}</li>" for email in email_list)
@@ -107,6 +108,57 @@ def read_email():
     finally:
         cursor.close()
         conn.close()
+
+# Ruta para añadir un estudiante
+@app.route('/add-student', methods=['GET', 'POST'])
+def add_student():
+    if request.method == 'POST':
+        # Recoger los datos del formulario
+        rut = request.form['rut']
+        name = request.form['name']
+        lastname = request.form['lastname']
+        email = request.form['email']
+
+        # Validar los campos básicos
+        if not rut or not name or not lastname or not email:
+            return "<h1>Faltan datos. Por favor, rellena todos los campos.</h1>"
+
+        # Conectar a la base de datos e insertar el nuevo estudiante
+        conn = get_db_connection()
+        if not conn:
+            return "<h1>Error de conexión a la base de datos.</h1>"
+        
+        cursor = conn.cursor()
+        try:
+            query = "INSERT INTO students (rut, name, lastname, email, created_in_rds_at) VALUES (%s, %s, %s, %s, NOW())"
+            cursor.execute(query, (rut, name, lastname, email))
+            conn.commit()
+            return redirect(url_for('hello_geek'))
+
+        except Exception as error:
+            print(f"Error inserting data: {error}")
+            return f"<h1>Error al añadir el estudiante: {error}</h1>"
+
+        finally:
+            cursor.close()
+            conn.close()
+
+    # Si es una petición GET, mostramos el formulario
+    html_content = """
+    <h1>Añadir nuevo estudiante</h1>
+    <form method="POST" action="/add-student">
+        <label for="rut">RUT:</label><br>
+        <input type="text" id="rut" name="rut"><br><br>
+        <label for="name">Nombre:</label><br>
+        <input type="text" id="name" name="name"><br><br>
+        <label for="lastname">Apellido:</label><br>
+        <input type="text" id="lastname" name="lastname"><br><br>
+        <label for="email">Correo electrónico:</label><br>
+        <input type="email" id="email" name="email"><br><br>
+        <input type="submit" value="Añadir Estudiante">
+    </form>
+    """
+    return html_content
 
 if __name__ == "__main__":
     app.run(debug=True)
