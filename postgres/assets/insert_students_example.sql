@@ -1,6 +1,26 @@
--- Inserción de 3 registros de prueba
+-- Inserción de 23 registros de prueba con RUTs únicos
 INSERT INTO students (rut, name, lastname, email, created_in_rds_at)
 VALUES 
 ('12345678-9', 'Juan', 'Pérez', 'juan.perez@email.com', NOW()),
 ('98765432-1', 'María', 'González', 'maria.gonzalez@email.com', NOW()),
-('11223344-5', 'Carlos', 'López', 'carlos.lopez@email.com', NOW());
+('11223344-5', 'Carlos', 'López', 'carlos.lopez@email.com', NOW()),
+('22334455-6', 'Ana', 'Martínez', 'ana.martinez@email.com', NOW()),
+('33445566-7', 'Luis', 'Ramírez', 'luis.ramirez@email.com', NOW()),
+('44556677-8', 'Laura', 'Fernández', 'laura.fernandez@email.com', NOW()),
+('55667788-9', 'Pedro', 'Gómez', 'pedro.gomez@email.com', NOW()),
+('66778899-0', 'Sofía', 'Morales', 'sofia.morales@email.com', NOW()),
+('77889900-2', 'Ricardo', 'Ortiz', 'ricardo.ortiz@email.com', NOW()),
+('88990011-3', 'Carmen', 'Rojas', 'carmen.rojas@email.com', NOW()),
+('99001122-4', 'Miguel', 'Torres', 'miguel.torres@email.com', NOW()),
+('00112233-5', 'Patricia', 'Flores', 'patricia.flores@email.com', NOW()),
+('11112233-6', 'Andrés', 'Ruiz', 'andres.ruiz@email.com', NOW()),
+('22223344-7', 'Valeria', 'Mendoza', 'valeria.mendoza@email.com', NOW()),
+('33334455-8', 'Javier', 'Herrera', 'javier.herrera@email.com', NOW()),
+('44445566-9', 'Raquel', 'Cabrera', 'raquel.cabrera@email.com', NOW()),
+('55556677-0', 'Fernando', 'Vargas', 'fernando.vargas@email.com', NOW()),
+('66667788-1', 'Teresa', 'Castillo', 'teresa.castillo@email.com', NOW()),
+('77778899-2', 'David', 'Soto', 'david.soto@email.com', NOW()),
+('88889900-3', 'Mónica', 'Ramos', 'monica.ramos@email.com', NOW()),
+('99990011-4', 'Esteban', 'Reyes', 'esteban.reyes@email.com', NOW()),
+('10111223-5', 'Paula', 'Pérez', 'paula.perez@email.com', NOW()),
+('12131415-6', 'Lucía', 'García', 'lucia.garcia@email.com', NOW());
