@@ -68,6 +68,20 @@ Image documentation can be found at -> https://hub.docker.com/_/postgres
 docker run --rm -p 5432:5432 --name postgres-database -e POSTGRES_PASSWORD=lagranzanahoriavendra -d postgres
 ```
 
+#Actualizar el imagen del contenedo
+Para reconstruir una imagen:
+
+Detener los contenedores
+```
+docker compose down
+```
+
+Reconstruye la imagen de Docker según el Dockerfile actualizado. En caso de actualizar el script de la app.
+```
+docker compose build flask-image
+```
+
+
 ## Workspace setup
 
 Python's built-in venv module is the recommended way to create virtual environments. Here's how it works:
