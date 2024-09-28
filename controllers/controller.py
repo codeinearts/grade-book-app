@@ -1,5 +1,13 @@
-from flask import Flask, request, redirect, url_for
+# controllers/controller.py
+from flask import request, redirect, url_for, Blueprint
 from psycopg2 import connect, OperationalError
+
+# TODO: resolver estos modulos
+from services.service import Service
+
+home_bp = Blueprint("home", __name__)
+service = Service()
+
 
 # Crear la conexión
 def get_db_connection():
@@ -16,59 +24,12 @@ def get_db_connection():
         print(f"Error connecting to the database: {error}")
         return None
 
-app = Flask(__name__)
+@home_bp.route('/', methods=['GET'])
+def home():
+    return service.home()
 
-@app.route('/')
-def hello_geek():
-    # HTML de bienvenida para el home
-    html_content = """
-    <!DOCTYPE html>
-    <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Bienvenido a la App de Gestión</title>
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                background-color: #f4f4f4;
-                color: #333;
-                text-align: center;
-                padding: 50px;
-            }
-            h1 {
-                color: #4CAF50;
-            }
-            p {
-                font-size: 18px;
-            }
-            a {
-                display: inline-block;
-                margin-top: 20px;
-                padding: 10px 20px;
-                background-color: #4CAF50;
-                color: white;
-                text-decoration: none;
-                border-radius: 5px;
-            }
-            a:hover {
-                background-color: #45a049;
-            }
-        </style>
-    </head>
-    <body>
-        <h1>Bienvenido a la App de Gestión de Estudiantes</h1>
-        <p>Esta es la página principal de nuestra aplicación donde puedes gestionar y visualizar datos de los estudiantes.</p>
-        <p>Haz clic en el enlace de abajo para ver la lista de correos electrónicos de los estudiantes registrados.</p>
-        <a href="/list-email-students">Ver lista de correos electrónicos</a><br><br>
-        <a href="/add-student">Añadir nuevo estudiante</a>
-    </body>
-    </html>
-    """
-    return html_content
-
-@app.route('/list-email-students')
-def read_email():
+@home_bp.route('/list-email-students', methods=['GET'])
+def list_email():
     conn = get_db_connection()
     if not conn:
         return "<h1>Database connection error!</h1>"
@@ -110,7 +71,7 @@ def read_email():
         conn.close()
 
 # Ruta para añadir un estudiante
-@app.route('/add-student', methods=['GET', 'POST'])
+@home_bp.route('/add-student', methods=['GET', 'POST'])
 def add_student():
     if request.method == 'POST':
         # Recoger los datos del formulario
@@ -133,7 +94,7 @@ def add_student():
             query = "INSERT INTO students (rut, name, lastname, email, created_in_rds_at) VALUES (%s, %s, %s, %s, NOW())"
             cursor.execute(query, (rut, name, lastname, email))
             conn.commit()
-            return redirect(url_for('hello_geek'))
+            return redirect(url_for('home'))
 
         except Exception as error:
             print(f"Error inserting data: {error}")
@@ -159,6 +120,3 @@ def add_student():
     </form>
     """
     return html_content
-
-if __name__ == "__main__":
-    app.run(debug=True)
