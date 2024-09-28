@@ -9,6 +9,11 @@ service = Service()
 def read():
     return service.read()
 
-@users_bp.route('/users/create', methods=['GET'])
+@users_bp.route('/users/create', methods=['POST'])
 def create():
+    # Recoger los datos del formulario
+    rut = request.form['rut']
+    name = request.form['name']
+    lastname = request.form['lastname']
+    email = request.form['email']
     return service.create()
