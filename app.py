@@ -10,7 +10,8 @@ app.config["DEBUG"] = True
 # Disable strict slashes globally
 app.url_map.strict_slashes = False
 # Establecer el SECRET_KEY
-app.config['SECRET_KEY'] = "yuta&rika"  # Cambia esto a una clave secreta única y segura
+# TODO: Cambia esto a una clave secreta única y segura
+app.config['SECRET_KEY'] = "yuta&rika"
 
 toolbar = DebugToolbarExtension(app)
 
