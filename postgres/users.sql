@@ -1,14 +1,16 @@
 CREATE TABLE users
 (
-    rut               VARCHAR(13) PRIMARY KEY,
+    hashed_user_rut   VARCHAR(245) PRIMARY KEY,
+    rut               VARCHAR(13),
     name              VARCHAR(50),
     lastname          VARCHAR(50),
-    email          VARCHAR(100),
+    email             VARCHAR(100),
     created_in_rds_at TIMESTAMP WITH TIME ZONE NOT NULL,
     updated_in_rds_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW()
 );
 
-COMMENT ON TABLE users IS 'Cuentas de usuarios';
+COMMENT ON TABLE users IS 'Cuentas de usuarios almacenadas';
+COMMENT ON COLUMN users.hashed_user_rut IS 'rut del usuario anonimizado';
 COMMENT ON COLUMN users.rut IS 'rut del usuario';
 COMMENT ON COLUMN users.name IS 'Nombre';
 COMMENT ON COLUMN users.lastname IS 'Apellido';
