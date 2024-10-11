@@ -105,7 +105,7 @@ source my_project_env/bin/activate
 #### Windows:
 
 ```
-my_project_env\Scripts\activate
+. my_project_env\Scripts\activate
 ```
 
 You'll see the environment name (e.g., (my_project_env)) prepended to your command prompt, indicating that you're now working within the virtual environment.
