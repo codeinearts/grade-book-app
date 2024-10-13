@@ -1,5 +1,5 @@
 -- Inserción de 23 registros de prueba con RUTs únicos
-INSERT INTO students (rut, name, lastname, email, created_in_rds_at)
+INSERT INTO users (rut, name, lastname, email, created_in_rds_at)
 VALUES 
 ('12345678-9', 'Juan', 'Pérez', 'juan.perez@email.com', NOW()),
 ('98765432-1', 'María', 'González', 'maria.gonzalez@email.com', NOW()),
